@@ -1,5 +1,8 @@
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
+import femaleHausa from "./assets/female_hausa_portrait.png";
 import maleIgbo from "./assets/male_igbo_profile_full.png";
+import { DemoImageCarousel } from "./components/demo-carousel";
 
 export default function Home() {
   return (
@@ -28,7 +31,7 @@ function Header() {
           <span className="text-sm font-semibold text-zinc-900">9ja Lingo</span>
         </div>
         <nav className="hidden items-center gap-8 text-sm text-zinc-700 sm:flex">
-          <a href="#home" className="hover:text-zinc-900">Home</a>
+          <a href="#home" className="hover:text-zinc-900 text-green-600">Home</a>
           <a href="#services" className="hover:text-zinc-900">Services</a>
           <a href="#blog" className="hover:text-zinc-900">Blog</a>
           <a href="#about" className="hover:text-zinc-900">About us</a>
@@ -46,12 +49,12 @@ function HeroSection() {
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-green-600/30 px-3 py-1 text-xs font-medium text-green-700">
           <span className="h-1.5 w-1.5 rounded-full bg-green-600" /> Top Nigerian
         </div>
-        <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
-          <span className="text-green-700">Voices That</span>
+        <h1 className="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl">
+          <span className="text-green-700">Voices That</span> <br />
           {" "}Speak{" "}
-          <span className="text-green-700"> Like You Do</span>
+          <span className="text-green-700"> Like <br /> You Do</span>
         </h1>
-        <p className="mt-4 max-w-xl text-sm text-zinc-600 sm:text-base">
+        <p className="mt-4 max-w-sm text-sm text-zinc-600 sm:text-base">
           Finally, a tool that understands Nigerian languages with accurate pronunciation, natural flow, and voices that feel authentic.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
@@ -64,7 +67,7 @@ function HeroSection() {
           src={maleIgbo}
           alt="Smiling Nigerian man in traditional attire"
           priority
-          className="h-full w-full rounded-2xl object-cover object-center"
+          className="h-full w-[90%] rounded-2xl  object-center object-cover mx-auto"
           sizes="(min-width: 1024px) 560px, 100vw"
         />
         {/* <div className="pointer-events-none absolute inset-0 rounded-2xl bg-black/20" /> */}
@@ -74,27 +77,41 @@ function HeroSection() {
 }
 
 function DemoSection() {
+  const carouselItems: DemoCarouselItem[] = [
+    {
+      alt: "Smiling Hausa woman in traditional attire",
+      src: femaleHausa,
+    },
+    {
+      alt: "Smiling Igbo man in traditional attire",
+      src: maleIgbo,
+    },
+  ];
+
   return (
-    <section className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-8 px-4 py-8 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:py-16 lg:px-8">
-      <div className="rounded-2xl border border-zinc-200 bg-zinc-900 p-4 text-white shadow">
-        <div className="mb-3 flex gap-2 text-sm">
-          <button className="rounded-md bg-white/10 px-3 py-1.5 font-medium text-white">Text to Speech</button>
-          <button className="rounded-md px-3 py-1.5 text-white/60 hover:text-white">Speech to Text</button>
+    <section className="mx-auto flex max-w-7xl flex-col items-center px-4 py-16 sm:px-6 lg:px-8">
+      <div className="relative w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#212121] px-6 pb-8 pt-6 text-white shadow-[0_35px_80px_rgba(12,12,12,0.45)] sm:px-10">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <div className="flex flex-col">
+            <div className="inline-flex w-max rounded-[20px] bg-[#2d2d2d] p-1">
+              <button className="rounded-[16px] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-zinc-900 shadow-sm">Text to Speech</button>
+              <button className="rounded-[16px] px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white/50 transition hover:text-white/80">Speech to Text</button>
+            </div>
+            <div className="mt-6 flex-1 rounded-[24px] border border-white/5 bg-[#2b2b2b] px-6 py-10 text-lg leading-relaxed text-white/90 shadow-inner">
+              <p>How you dey? Make we catch up later for evening.</p>
+            </div>
+            <div className="mt-8 grid grid-cols-[repeat(3,minmax(120px,1fr))_72px] gap-4">
+              <SelectPill label="Language" value="Language" />
+              <SelectPill label="Accent" value="Accent" />
+              <SelectPill label="Voice" value="Voice" />
+              <PlayButton />
+            </div>
+          </div>
+          <div className="hidden lg:block">
+            <DemoImageCarousel items={carouselItems} />
+          </div>
         </div>
-        <div className="rounded-lg bg-zinc-800 p-4 text-sm text-zinc-100">
-          How you dey? Make we catch up later for evening.
-        </div>
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <SelectPill label="Language" />
-          <SelectPill label="Accent" />
-          <SelectPill label="Voice" />
-          <button aria-label="Play" className="inline-flex items-center justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-medium text-white hover:bg-green-700">▶ Play</button>
-        </div>
-      </div>
-      <div className="relative h-72 w-full overflow-hidden rounded-2xl bg-zinc-100 sm:h-96">
-        <div className="absolute inset-0 grid place-items-center text-sm text-zinc-500">
-          <span className="rounded-full bg-zinc-200 px-3 py-1">Portrait Image</span>
-        </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-black/40 to-transparent" />
       </div>
     </section>
   );
@@ -251,10 +268,24 @@ function TestimonialCard({ name, role, quote }: Testimonial) {
   );
 }
 
-function SelectPill({ label }: { label: string }) {
+function PlayButton() {
   return (
-    <button className="inline-flex items-center justify-between gap-2 rounded-md border border-white/15 bg-white/5 px-3 py-2 text-sm text-white hover:bg-white/10">
-      {label} <span className="text-white/60">▾</span>
+    <button
+      aria-label="Play demo audio"
+      className="grid h-14 w-14 place-items-center rounded-full bg-white text-zinc-900 shadow-[0_10px_25px_rgba(15,15,15,0.35)] transition hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+    >
+      <span className="pl-0.5 text-lg font-semibold">▶</span>
+    </button>
+  );
+}
+
+function SelectPill({ label, value }: SelectPillProps) {
+  return (
+    <button className="flex items-center justify-between rounded-full border border-white/20 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+      <span>{label}</span>
+      <span className="grid h-6 w-6 place-items-center rounded-full bg-white/10 text-white/70">
+        ▾
+      </span>
     </button>
   );
 }
@@ -306,6 +337,16 @@ interface Testimonial {
   name: string;
   role: string;
   quote: string;
+}
+
+interface SelectPillProps {
+  label: string;
+  value: string;
+}
+
+interface DemoCarouselItem {
+  alt: string;
+  src: StaticImageData;
 }
 
 
