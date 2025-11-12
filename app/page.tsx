@@ -1,8 +1,12 @@
 import Image from "next/image";
+import type { ReactElement, SVGProps } from "react";
 import type { StaticImageData } from "next/image";
 import femaleHausa from "./assets/female_hausa_portrait.png";
 import maleIgbo from "./assets/male_igbo_profile_full.png";
-import { DemoImageCarousel } from "./components/demo-carousel";
+import dualArrowsIcon from "./assets/dual-arrows-icon.png";
+import headphoneBehindCardIcon from "./assets/headphone-behind-card-icon.png";
+import switchIcon from "./assets/switch-icon.png";
+import { DemoImageCarousel, type DemoCarouselItem } from "./components/demo-carousel";
 
 export default function Home() {
   return (
@@ -119,13 +123,17 @@ function DemoSection() {
 
 function FeaturesSection() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <h2 className="text-center text-2xl font-semibold text-green-700">What Makes 9ja Lingo Different</h2>
-      <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-zinc-600">Designed for Nigerian voices — accurate, natural, and built to sound like you.</p>
-      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
-        <FeatureCard title="Dual Conversion Mode" description="Switch easily between Speech‑to‑Text and Text‑to‑Speech" />
-        <FeatureCard title="Accurate Nigerian Voices" description="Get natural pronunciation and tones that reflect how we really speak" />
-        <FeatureCard title="Simple & Fast" description="A clean, modern interface made for everyone" />
+    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="text-center">
+        <h2 className="text-2xl font-semibold text-green-700 sm:text-3xl">What Makes 9ja Lingo Different</h2>
+        <p className="mx-auto mt-3 max-w-2xl text-base text-zinc-600">
+          Designed for Nigerian voices — accurate, natural, and built to sound like you.
+        </p>
+      </div>
+      <div className="mt-12 grid grid-cols-1 gap-14 text-center sm:grid-cols-3">
+        {FEATURE_ITEMS.map((feature) => (
+          <FeatureCard key={feature.title} {...feature} />
+        ))}
       </div>
     </section>
   );
@@ -133,14 +141,18 @@ function FeaturesSection() {
 
 function ProcessSection() {
   return (
-    <section className="bg-green-50">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <h2 className="text-center text-2xl font-semibold text-zinc-900">Start in 3 Steps</h2>
-        <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-zinc-600">Designed for Nigerian voices — accurate, natural, and built to sound like you.</p>
-        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <ProcessCard step="Step 1" title="Visit the Website" />
-          <ProcessCard step="Step 2" title="Choose a Feature" subtitle="Text‑to‑Speech or Speech‑to‑Text" />
-          <ProcessCard step="Step 3" title="Speak or Type" />
+    <section className="bg-[#e6f5ea] py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold text-green-700 sm:text-3xl">Start in 3 Steps</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-base text-green-800/70">
+            Designed for Nigerian voices — accurate, natural, and built to sound like you.
+          </p>
+        </div>
+        <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-3">
+          {PROCESS_STEPS.map((step) => (
+            <ProcessCard key={step.title} {...step} />
+          ))}
         </div>
       </div>
     </section>
@@ -236,24 +248,35 @@ function Footer() {
   );
 }
 
-function FeatureCard({ title, description }: { title: string; description: string }) {
+function FeatureCard({ title, description, icon }: FeatureItem) {
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-      <div className="mb-4 h-10 w-10 rounded-lg bg-green-100" />
-      <h3 className="text-base font-semibold text-zinc-900">{title}</h3>
-      <p className="mt-1 text-sm text-zinc-600">{description}</p>
+    <div className="mx-auto flex max-w-xs flex-col items-center text-center">
+      <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-[#26A643]/10">
+        <Image src={icon.src} alt={icon.alt} width={icon.width} height={icon.height} className="h-auto w-12" />
+      </div>
+      <h3 className="mt-6 text-lg font-semibold text-green-700">{title}</h3>
+      <p className="mt-3 text-sm leading-relaxed text-zinc-600">{description}</p>
     </div>
   );
 }
 
-function ProcessCard({ step, title, subtitle }: { step: string; title: string; subtitle?: string }) {
+function ProcessCard({ stepLabel, title, description, Icon }: ProcessStep) {
   return (
-    <div className="rounded-2xl bg-green-600 p-6 text-white shadow">
-      <div className="text-xs font-semibold opacity-90">{step}</div>
-      <h3 className="mt-2 text-lg font-semibold">{title}</h3>
-      {subtitle ? <p className="mt-1 text-sm text-white/90">{subtitle}</p> : null}
+    <div className="relative mx-auto w-full max-w-sm">
+      <div className="relative min-h-[420px] rounded-[56px] bg-[#29a75b] px-10 pb-16 pt-20 text-center text-white shadow-[0_30px_60px_rgba(41,167,91,0.35)]">
+        <span aria-hidden className="absolute -top-10 right-0 h-24 w-24 rounded-bl-[72px] bg-[#e6f5ea]" />
+        <div className="relative mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-white text-green-600">
+          <Icon className="h-14 w-14" />
+        </div>
+        <h3 className="relative mt-10 text-xl font-semibold">{title}</h3>
+        <p className="relative mx-auto mt-5 max-w-[220px] text-sm leading-relaxed text-white/85">{description}</p>
+      </div>
+      <div className="absolute -top-8 right-10 flex items-center gap-2 rounded-full border border-green-500/60 bg-white px-6 py-2 text-sm font-semibold text-green-600 shadow-[0_6px_18px_rgba(41,167,91,0.25)]">
+        <span>{stepLabel}</span>
+        <ArrowRightIcon className="h-3.5 w-3.5 text-green-600" />
+      </div>
     </div>
-  );
+  );x
 }
 
 function TestimonialCard({ name, role, quote }: Testimonial) {
@@ -309,7 +332,119 @@ function IconCircle({ label }: { label: string }) {
   );
 }
 
+function ArrowRightIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M3.5 8h9"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="m9.5 4.5 3.5 3.5-3.5 3.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function GlobeIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="24" cy="24" r="18" stroke="currentColor" strokeWidth="3" />
+      <path d="M6 24h36" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M24 6s10 8 10 18-10 18-10 18-10-8-10-18 10-18 10-18Z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function MicBubbleIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect x="16" y="8" width="16" height="26" rx="8" stroke="currentColor" strokeWidth="3" />
+      <path d="M12 24c0 6.627 5.373 12 12 12s12-5.373 12-12" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M24 36v6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M16 42h16" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M33 10h5a2 2 0 0 1 2 2v14" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function MicDocumentIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M30 6H18a4 4 0 0 0-4 4v28a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4V10a4 4 0 0 0-4-4Z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20 18v10c0 2.21 1.79 4 4 4s4-1.79 4-4V18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M24 34v4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M19 12h10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M19 16h10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 // Static content & types
+const FEATURE_ITEMS: FeatureItem[] = [
+  {
+    title: "Dual Conversion Mode",
+    description: "Switch easily between Speech-to-Text and Text-to-Speech.",
+    icon: {
+      src: dualArrowsIcon,
+      alt: "Dual arrows icon",
+      width: 64,
+      height: 64,
+    },
+  },
+  {
+    title: "Accurate Nigerian Voices",
+    description: "Get pronunciation and tones that reflect how we really speak.",
+    icon: {
+      src: headphoneBehindCardIcon,
+      alt: "Headphone and card icon",
+      width: 64,
+      height: 64,
+    },
+  },
+  {
+    title: "Simple & Fast",
+    description: "A clean, modern interface made for everyone.",
+    icon: {
+      src: switchIcon,
+      alt: "Simple interface icon",
+      width: 64,
+      height: 64,
+    },
+  },
+];
+
 const TESTIMONIALS: Testimonial[] = [
   {
     name: "Tunde",
@@ -333,6 +468,27 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
+const PROCESS_STEPS: ProcessStep[] = [
+  {
+    stepLabel: "Step 1",
+    title: "Visit the Website",
+    description: "Go to the website on any device to get started.",
+    Icon: GlobeIcon,
+  },
+  {
+    stepLabel: "Step 2",
+    title: "Choose a Feature",
+    description: "Select Text-to-Speech (TTS) or Speech-to-Text (STT).",
+    Icon: MicBubbleIcon,
+  },
+  {
+    stepLabel: "Step 3",
+    title: "Speak or Type",
+    description: "Say something or enter text, and get instant output.",
+    Icon: MicDocumentIcon,
+  },
+];
+
 interface Testimonial {
   name: string;
   role: string;
@@ -344,9 +500,24 @@ interface SelectPillProps {
   value: string;
 }
 
-interface DemoCarouselItem {
-  alt: string;
+interface FeatureItem {
+  title: string;
+  description: string;
+  icon: FeatureIcon;
+}
+
+interface FeatureIcon {
   src: StaticImageData;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+interface ProcessStep {
+  stepLabel: string;
+  title: string;
+  description: string;
+  Icon: (props: SVGProps<SVGSVGElement>) => ReactElement;
 }
 
 
