@@ -42,8 +42,9 @@ function Header() {
           <a href="#services" className="hover:text-zinc-900">Services</a>
           <a href="#blog" className="hover:text-zinc-900">Blog</a>
           <a href="#about" className="hover:text-zinc-900">About us</a>
+          {/* <a href="/auth/demo" className="hover:text-zinc-900">Auth Demo</a> */}
         </nav>
-        <a href="#get-started" className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-green-700">Get Started</a>
+        <a href="/auth/signup" className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-green-700">Get Started</a>
       </div>
     </header>
   );
