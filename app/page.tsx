@@ -3,13 +3,14 @@ import type { ReactElement, SVGProps } from "react";
 import type { StaticImageData } from "next/image";
 import femaleHausa from "./assets/female_hausa_portrait.png";
 import maleIgbo from "./assets/male_igbo_profile_full.png";
-import lightBulbIdea from "./assets/light-bulb-idea.png";
-import dualArrowsIcon from "./assets/dual-arrows-icon.png";
-import headphoneBehindCardIcon from "./assets/headphone-behind-card-icon.png";
-import switchIcon from "./assets/switch-icon.png";
+import lightBulbIdea from "./assets/icons/light-bulb-idea.png";
+import dualArrowsIcon from "./assets/icons/dual-arrows-icon.png";
+import headphoneBehindCardIcon from "./assets/icons/headphone-behind-card-icon.png";
+import switchIcon from "./assets/icons/switch-icon.png";
 import igboAndNativeWomen from "./assets/igbo-andnative-women.png";
 import hausaAndNativeWomen from "./assets/hausa-and-native-women.png";
 import { DemoImageCarousel, type DemoCarouselItem } from "./components/demo-carousel";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -44,7 +45,7 @@ function Header() {
           <a href="#about" className="hover:text-zinc-900">About us</a>
           {/* <a href="/auth/demo" className="hover:text-zinc-900">Auth Demo</a> */}
         </nav>
-        <a href="/auth/signup" className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-green-700">Get Started</a>
+        <Link href="/auth/signup" className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-green-700">Get Started</Link>
       </div>
     </header>
   );
